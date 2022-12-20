@@ -1,0 +1,24 @@
+.card {
+    align-items: center;
+    padding: 30px 10px;
+}
+
+#add-chart-button {
+    margin-top: 5%;
+}
+
+.details__container {
+    display: flex;
+
+}
+
+.details__wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.product__picture {
+    display: flex;
+    justify-content: center;
+
+}

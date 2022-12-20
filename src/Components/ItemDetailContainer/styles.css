@@ -1,0 +1,7 @@
+.product__container {
+    justify-content: center;
+}
+
+.product__info {
+    max-height: 50%;
+}
