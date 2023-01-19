@@ -1,17 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import useFirebase from '../../hook/useFirebase';
 import ItemDetail from '../ItemDetail/ItemDetail';
 import './styles.css';
 
-const ItemDetailContainer = (props) => {
+const ItemDetailContainer = () => {
   const { id } = useParams();
-  const [product, setProduct] = useState({});
-  const baseUrl = 'https://fakestoreapi.com';
+  const { product, getProduct } = useFirebase();
 
   useEffect(() => {
-    fetch(`${baseUrl}/products/${id}`)
-      .then((res) => res.json())
-      .then((data) => setProduct(data));
+    getProduct(id);
   }, []);
 
   return <ItemDetail product={product} />;

@@ -1,0 +1,25 @@
+.cart-container {
+    display: flex;
+    flex-direction: row;
+    margin: 0 5%;
+    border: 0.5px solid gray;
+    padding: 2rem;
+    justify-content: space-around;
+    height: 700px;
+}
+
+.cart-list {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    gap: 1.5rem;
+    border: 0.5px solid gray;
+}
+
+.cart-form {
+    padding: 5rem;
+    display: flex;
+    flex-direction: column;
+    border: 0.5px solid black;
+    height: fit-content;
+}

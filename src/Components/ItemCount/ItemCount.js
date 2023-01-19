@@ -1,14 +1,27 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
+import { CartContext } from '../../Context/CartProvider';
 
-const ItemCount = (props) => {
-  const [counter, setCounter] = useState(1);
-  const onAdd = () => counter < props.stock && setCounter(counter + 1);
-  const onSubtract = () => setCounter(counter - 1);
-  const handleChange = (e) => setCounter(e.target.value);
+const ItemCount = ({ stock }) => {
+  const { updateQuantity, selectedItems } = useContext(CartContext);
+
+  const onAdd = () => {
+    updateQuantity(selectedItems + 1);
+  };
+  const onSubtract = () => {
+    updateQuantity(selectedItems - 1);
+  };
+  const handleChange = (e) => {
+    const value = Number(e.target.value);
+    updateQuantity(value);
+  };
 
   return (
     <div className='d-flex justify-content-center'>
-      <button className='btn btn-dark' onClick={onSubtract} disabled={counter > 1 ? false : true}>
+      <button
+        className='btn btn-dark'
+        onClick={onSubtract}
+        disabled={selectedItems > 1 ? false : true}
+      >
         <svg
           xmlns='http://www.w3.org/2000/svg'
           width='16'
@@ -26,14 +39,14 @@ const ItemCount = (props) => {
       <input
         type='number'
         className='form-control'
-        value={counter}
+        value={selectedItems}
         onChange={handleChange}
         style={{ textAlign: 'center' }}
       />
       <button
         className='btn btn-dark'
         onClick={onAdd}
-        disabled={counter < props.stock ? false : true}
+        disabled={selectedItems > 0 && selectedItems < stock ? false : true}
       >
         <svg
           xmlns='http://www.w3.org/2000/svg'

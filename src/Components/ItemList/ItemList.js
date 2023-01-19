@@ -1,21 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import useFirebase from '../../hook/useFirebase';
 import Item from '../Item/Item';
 import './styles.css';
 
 const ItemList = (props) => {
   const { id } = props;
-  const baseUrl = 'https://fakestoreapi.com';
-  const [loading, setLoading] = useState(true);
-  const [productItems, setproductItems] = useState([]);
+  const { products, getProducts, filterProducts, filteredProducts } = useFirebase();
 
   useEffect(() => {
-    fetch(`${baseUrl}/products${id ? '/category/' + id : ''}`)
-      .then((res) => res.json())
-      .then((data) => setproductItems(data));
-    setLoading(false);
+    !id ? getProducts() : filterProducts(id);
   }, [id]);
 
-  const items = productItems.map(({ id, title, description, price, image }) => {
+  const renderItems = !id ? products : filteredProducts;
+  const items = renderItems.map(({ id, title, description, price, image, quantity }) => {
     return (
       <Item
         key={id}
@@ -24,11 +21,12 @@ const ItemList = (props) => {
         description={description}
         price={price}
         pictureUrl={image}
+        stock={quantity}
       />
     );
   });
 
-  return <div className='container'>{loading ? <p>Loading...</p> : items}</div>;
+  return <div className='container'>{items}</div>;
 };
 
 export default ItemList;

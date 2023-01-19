@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import './styles.css';
 
 const Item = (props) => {
-  const { id, title, description, price, pictureUrl } = props;
+  const { id, title, description, price, pictureUrl, stock } = props;
 
   let navigate = useNavigate();
   const routeChange = () => {
@@ -19,6 +19,7 @@ const Item = (props) => {
           <p className='card-text'>
             {description.length > 29 ? `${description.slice(0, 29)}...` : description}
           </p>
+          <p className='card-text'>Stock: {stock}</p>
           <p className='card-text'>${price}</p>
         </div>
       </div>
