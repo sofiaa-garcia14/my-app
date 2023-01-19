@@ -6,8 +6,7 @@ import useFirebase from '../../hook/useFirebase';
 
 const CartForm = () => {
   const [inputs, setInputs] = useState({});
-  const { cart } = useContext(CartContext);
-  const { clear } = useContext(CartContext);
+  const { cart, clear, total } = useContext(CartContext);
   const { updateProduct } = useFirebase();
 
   const handleChange = (event) => {
@@ -39,9 +38,7 @@ const CartForm = () => {
     const order = {
       buyer: inputs,
       itemId: cart.map((cartEl) => cartEl.item.id),
-      total: cart
-        .map((cartEl) => Number(cartEl.item.price) * cartEl.quantity, 0)
-        .reduce((curr, prev) => curr + prev, 0),
+      total: total,
     };
     cart.forEach((cartItem) =>
       updateProduct(cartItem.item.id, cartItem.item.quantity - cartItem.quantity)
@@ -52,6 +49,7 @@ const CartForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
+      <strong>Total a pagar: ${total.toFixed(2)}</strong>
       <div className='mb-3'>
         <label htmlFor='emailField' className='form-label'>
           Email
