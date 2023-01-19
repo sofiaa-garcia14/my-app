@@ -8,6 +8,7 @@ const CartForm = () => {
   const [inputs, setInputs] = useState({});
   const { cart } = useContext(CartContext);
   const { clear } = useContext(CartContext);
+  const { updateProduct } = useFirebase();
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -42,6 +43,9 @@ const CartForm = () => {
         .map((cartEl) => Number(cartEl.item.price) * cartEl.quantity, 0)
         .reduce((curr, prev) => curr + prev, 0),
     };
+    cart.forEach((cartItem) =>
+      updateProduct(cartItem.item.id, cartItem.item.quantity - cartItem.quantity)
+    );
     sendOrder(order.buyer, order.itemId, order.total);
     clear();
   };

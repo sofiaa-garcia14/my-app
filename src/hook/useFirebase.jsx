@@ -1,6 +1,15 @@
 import { useState } from 'react';
 import { db } from '../firebase';
-import { collection, getDocs, getDoc, doc, query, where, addDoc } from 'firebase/firestore';
+import {
+  collection,
+  getDocs,
+  getDoc,
+  doc,
+  query,
+  where,
+  addDoc,
+  updateDoc,
+} from 'firebase/firestore';
 
 const useFirebase = () => {
   const [products, setProducts] = useState([]);
@@ -53,6 +62,17 @@ const useFirebase = () => {
     await addDoc(collection(db, 'orders'), order);
   };
 
+  const updateProduct = async (id, quantity) => {
+    console.log(`id: ${id}, quantity: ${quantity}`);
+    const orderDoc = doc(db, 'products', id);
+    try {
+      await updateDoc(orderDoc, { quantity: quantity });
+      console.log('Updated!');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return {
     product,
     getProduct,
@@ -61,6 +81,7 @@ const useFirebase = () => {
     filterProducts,
     filteredProducts,
     sendOrder,
+    updateProduct,
   };
 };
 
